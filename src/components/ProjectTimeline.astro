@@ -1,0 +1,84 @@
+---
+interface TimelineStep {
+  title: string;
+  lines: readonly string[];
+}
+
+interface Props {
+  steps: readonly TimelineStep[];
+}
+
+const { steps } = Astro.props;
+const narrative = `October 3 to November 13, 2026. ${steps
+  .map(({ title, lines }) => `${title}. ${lines.join('. ')}.`)
+  .join(' ')}`;
+const horizontal = steps.map((step, position) => {
+  const x = 112 + position * 176;
+  const above = position % 2 === 0;
+  const first = position === 0;
+  const last = position === steps.length - 1;
+
+  return {
+    ...step,
+    x,
+    textX: first ? 34 : last ? 1066 : x,
+    anchor: first ? 'start' : last ? 'end' : 'middle',
+    titleY: above ? 48 : 222,
+    leaderY: above ? 118 : 197,
+  };
+});
+---
+
+<figure class="timeline-art">
+  <svg
+    class="timeline-graphic timeline-graphic--wide"
+    viewBox="0 0 1100 310"
+    role="img"
+    aria-labelledby="timeline-wide-name"
+    aria-describedby="timeline-wide-description"
+  >
+    <title id="timeline-wide-name">Six-week robotic arm timeline</title>
+    <desc id="timeline-wide-description">{narrative}</desc>
+    <path class="timeline-rail" d="M34 160H1066" />
+    <text class="timeline-date" x="34" y="194">Oct 3</text>
+    <text class="timeline-date" x="1066" y="143" text-anchor="end">Nov 13, 2026</text>
+
+    {horizontal.map(({ title, lines, x, textX, anchor, titleY, leaderY }) => (
+      <g>
+        <line class="timeline-leader" x1={x} y1="160" x2={x} y2={leaderY} />
+        <rect class="timeline-point" x={x - 5} y="155" width="10" height="10" />
+        <text class="timeline-stage-name" x={textX} y={titleY} text-anchor={anchor}>{title}</text>
+        <text class="timeline-stage-copy" text-anchor={anchor}>
+          {lines.map((line, index) => <tspan x={textX} y={titleY + 27 + index * 22}>{line}</tspan>)}
+        </text>
+      </g>
+    ))}
+  </svg>
+
+  <svg
+    class="timeline-graphic timeline-graphic--compact"
+    viewBox="0 0 360 633"
+    role="img"
+    aria-labelledby="timeline-compact-name"
+    aria-describedby="timeline-compact-description"
+  >
+    <title id="timeline-compact-name">Six-week robotic arm timeline</title>
+    <desc id="timeline-compact-description">{narrative}</desc>
+    <path class="timeline-rail" d="M26 54V585" />
+    <text class="timeline-date" x="47" y="38">Oct 3</text>
+    <text class="timeline-date" x="47" y="607">Nov 13, 2026</text>
+
+    {steps.map(({ title, lines }, index) => {
+      const y = 78 + index * 91;
+      return (
+        <g>
+          <rect class="timeline-point" x="21" y={y - 7} width="10" height="10" />
+          <text class="timeline-stage-name" x="47" y={y + 4}>{title}</text>
+          <text class="timeline-stage-copy">
+            {lines.map((line, lineIndex) => <tspan x="47" y={y + 29 + lineIndex * 22}>{line}</tspan>)}
+          </text>
+        </g>
+      );
+    })}
+  </svg>
+</figure>

@@ -1,10 +1,11 @@
 ---
+import ProjectTimeline from '../../components/ProjectTimeline.astro';
 import PortfolioLayout from '../../layouts/PortfolioLayout.astro';
 import { robotArm } from '../../data/robot-arm';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const imagePath = `${base}/images/robot-arm`;
-const timelinePath = `${base}/videos/robot-arm-timeline.mp4`;
+const videoPath = `${base}/videos/robot-arm-timeline`;
 ---
 
 <PortfolioLayout title={robotArm.title} description={robotArm.summary} section="work">
@@ -30,35 +31,21 @@ const timelinePath = `${base}/videos/robot-arm-timeline.mp4`;
         height="1080"
         aria-label="Three-axis robotic arm demonstration"
       >
-        <source src={timelinePath} type="video/mp4" />
-        <a href={timelinePath}>Download the robotic arm demonstration</a>
+        <source src={`${videoPath}.webm`} type={'video/webm; codecs="vp9, opus"'} />
+        <source src={`${videoPath}.mp4`} type="video/mp4" />
+        <a href={`${videoPath}.mp4`}>Download the robotic arm demonstration</a>
       </video>
-      <figcaption>Prototype demo · 1:16</figcaption>
+      <figcaption class="case-video-caption">
+        <span>Prototype demo · 1:16</span>
+        <a href={`${videoPath}.mp4`} target="_blank" rel="noopener">
+          Open video<span class="sr-only"> in a new tab</span>
+        </a>
+      </figcaption>
     </figure>
 
     <section class="project-timeline" id="timeline" aria-labelledby="timeline-title">
-      <div class="project-section-heading">
-        <h2 id="timeline-title">Timeline</h2>
-        <p class="project-meta">
-          <time datetime="2026-10-03">Oct 3</time>–<time datetime="2026-11-13">Nov 13, 2026</time>
-        </p>
-      </div>
-      <ol class="timeline-steps" role="list">
-        {robotArm.timeline.map(({ title, description }) => (
-          <li>
-            <h3>{title}</h3>
-            <p>{description}</p>
-          </li>
-        ))}
-      </ol>
-      <a
-        class="text-link timeline-diagram"
-        href={`${imagePath}/robot-arm-project-timeline.webp`}
-        target="_blank"
-        rel="noopener"
-      >
-        View timeline diagram<span class="sr-only"> (opens in a new tab)</span>
-      </a>
+      <div class="project-section-heading"><h2 id="timeline-title">Timeline</h2></div>
+      <ProjectTimeline steps={robotArm.timeline} />
     </section>
 
     <section class="project-build" id="gallery" aria-labelledby="build-title">

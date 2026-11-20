@@ -10,12 +10,12 @@ export const robotArm = {
     { value: '6 weeks', label: 'Build & test' },
   ],
   timeline: [
-    { title: 'System architecture', description: 'Defined kinematics, selected motors, and planned the electronics and firmware.' },
-    { title: 'First joint', description: 'Integrated the first joint and tested its motion and trajectory planning.' },
-    { title: 'Base design', description: 'Completed the first CAD assembly and refined the belt drive and motion control.' },
-    { title: 'Two-joint motion', description: 'Tested simultaneous motion and evaluated speed and accuracy on the bench.' },
-    { title: 'Three-joint assembly', description: 'Integrated the rotating base and tested motion using forward kinematics.' },
-    { title: 'Validation', description: 'Added limit-switch homing and measured positioning repeatability.' },
+    { title: 'System architecture', lines: ['Kinematics and motor selection', 'Electronics and firmware'] },
+    { title: 'First joint', lines: ['Integrated the first joint', 'Tested trajectory planning'] },
+    { title: 'Base design', lines: ['Completed the CAD assembly', 'Refined belts and motion control'] },
+    { title: 'Two-joint motion', lines: ['Tested coordinated motion', 'Checked speed and accuracy'] },
+    { title: 'Three-joint assembly', lines: ['Integrated the rotating base', 'Tested forward kinematics'] },
+    { title: 'Validation', lines: ['Added limit-switch homing', 'Measured repeatability'] },
   ],
   buildImages: [
     {

@@ -336,6 +336,17 @@ figcaption {
 }
 
 
+.case-video-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .25rem 1rem;
+}
+
+.case-video-caption a { display: inline-flex; align-items: center; min-height: 2.75rem; text-underline-offset: .25em; }
+.case-video-caption a:hover { color: var(--accent); }
+
 .control-flow {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -376,8 +387,8 @@ figcaption {
   margin-top: .5rem;
 }
 
-.case-shortcuts .text-link, .timeline-diagram { color: var(--muted); }
-.case-shortcuts .text-link:hover, .timeline-diagram:hover { color: var(--accent); }
+.case-shortcuts .text-link { color: var(--muted); }
+.case-shortcuts .text-link:hover { color: var(--accent); }
 
 .project-timeline { margin-bottom: clamp(2rem, 5vw, 4rem); }
 
@@ -397,22 +408,27 @@ figcaption {
   letter-spacing: -.05em;
 }
 
-.timeline-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
-  gap: 0 1.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.timeline-art {
+  width: min(100%, 29rem);
+  margin-inline: auto;
+  border: 1px solid var(--line);
+  background: var(--white);
 }
 
-.timeline-steps li {
-  padding-block: .8rem 1rem;
-  border-top: 1px solid var(--line);
+.timeline-graphic {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--sans);
 }
 
-.timeline-steps h3 { margin-bottom: .25rem; font-size: 1rem; line-height: 1.35; }
-.timeline-steps p { color: var(--body); line-height: 1.5; }
+.timeline-graphic--wide { display: none; }
+.timeline-rail { fill: none; stroke: var(--line); stroke-width: 2; }
+.timeline-leader { stroke: var(--line); stroke-width: 2; }
+.timeline-point { fill: var(--accent); }
+.timeline-stage-name { fill: var(--ink); font-size: 21px; font-weight: 700; }
+.timeline-stage-copy { fill: var(--body); font-size: 18px; }
+.timeline-date { fill: var(--accent); font: 600 16px var(--mono); }
 
 .about-resume {
   display: grid;
@@ -482,11 +498,10 @@ figcaption {
 .resume-bullets { margin: 0; padding-inline-start: 1.15rem; color: var(--body); line-height: 1.6; }
 .resume-bullets li + li { margin-top: .4rem; }
 
-@media (min-width: 49rem) {
-  .timeline-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
 @media (min-width: 64rem) {
+  .timeline-art { width: 100%; }
+  .timeline-graphic--wide { display: block; }
+  .timeline-graphic--compact { display: none; }
   .about-resume { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
 }
 
