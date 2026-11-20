@@ -212,6 +212,8 @@ figcaption {
   background: var(--white);
 }
 
+.work-card + .work-card { margin-top: clamp(1rem, 3vw, 2rem); }
+
 .work-image {
   position: relative;
   align-self: stretch;
@@ -497,6 +499,23 @@ figcaption {
 .resume-disclosure > summary { font-size: 1rem; }
 .resume-bullets { margin: 0; padding-inline-start: 1.15rem; color: var(--body); line-height: 1.6; }
 .resume-bullets li + li { margin-top: .4rem; }
+
+
+.physics-studies {
+  display: grid;
+  gap: clamp(2.75rem, 6vw, 5rem);
+  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.physics-study figcaption {
+  max-width: 73ch;
+  margin-block: .65rem 1rem;
+  font-size: 1rem;
+}
+
+.physics-study > .disclosure { border-block: 1px solid var(--line); }
+.physics-study .disclosure-body .text-link { margin-top: .3rem; color: var(--muted); }
+.physics-study .disclosure-body .text-link:hover { color: var(--accent); }
 
 @media (min-width: 64rem) {
   .timeline-art { width: 100%; }
