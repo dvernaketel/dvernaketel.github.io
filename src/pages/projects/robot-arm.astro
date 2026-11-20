@@ -1,4 +1,5 @@
 ---
+import ProjectGallery from '../../components/ProjectGallery.astro';
 import PortfolioLayout from '../../layouts/PortfolioLayout.astro';
 import { robotArm } from '../../data/robot-arm';
 
@@ -13,6 +14,11 @@ const timelinePath = `${base}/videos/robot-arm-timeline.mp4`;
       <a class="text-link back-link" href={`${base}/#work`}>All work</a>
       <h1 class="page-title">{robotArm.title}</h1>
       <p class="page-lead">From CAD to a working tabletop arm in six weeks.</p>
+      <nav class="case-shortcuts" aria-label="On this page">
+        <a class="text-link" href="#timeline">Timeline</a>
+        <a class="text-link" href="#gallery">Gallery</a>
+        <a class="text-link" href="#details">Details</a>
+      </nav>
     </header>
 
     <figure class="case-hero">
@@ -31,71 +37,90 @@ const timelinePath = `${base}/videos/robot-arm-timeline.mp4`;
       <figcaption>Prototype demo · 1:16</figcaption>
     </figure>
 
-    <section class="disclosure-list case-details" aria-label="Project details">
-      <details class="disclosure">
-        <summary>Design</summary>
-        <div class="disclosure-body" id="mechanical">
-          <p>
-            I estimated the shoulder’s peak load and acceleration torque, then checked both against stepper torque curves. Cost and lead time favored 3D-printed links with off-the-shelf hardware.
-          </p>
-          <p>
-            Two 4:1 belt stages give the shoulder a 16:1 reduction. Longer belts eased assembly, adjustable mounts set belt tension, and flanged collars held the shafts in place.
-          </p>
-          <figure class="case-figure">
-            <div class="image-mat">
-              <img
-                src={`${imagePath}/robot-arm-exploded-linkage.webp`}
-                alt="Exploded linkage showing the stepper motor, shafts, pulleys, and bearings"
-                width="1200"
-                height="994"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <figcaption>Exploded linkage assembly</figcaption>
-          </figure>
-        </div>
-      </details>
-
-      <details class="disclosure">
-        <summary>Controls</summary>
-        <div class="disclosure-body" id="controls">
-          <p>
-            The ESP32 receives pose commands over serial. Its C++ firmware plans trapezoidal moves and sends step and direction pulses to the drivers.
-          </p>
-          <ol class="control-flow" aria-label="Motion control signal path">
-            <li><strong>Python</strong><span>Pose commands</span></li>
-            <li><strong>ESP32</strong><span>Trajectory planning</span></li>
-            <li><strong>DM542T</strong><span>Motor drive</span></li>
-          </ol>
-          <p>I tuned two-joint motion on the bench and checked step timing while polling the controller.</p>
-        </div>
-      </details>
-
-      <details class="disclosure">
-        <summary>Results</summary>
-        <div class="disclosure-body" id="results">
-          <table class="results-table">
-            <caption class="sr-only">Design targets and observed prototype results</caption>
-            <thead>
-              <tr><th scope="col">Metric</th><th scope="col">Target</th><th scope="col">Result</th></tr>
-            </thead>
-            <tbody>
-              {robotArm.results.map(({ metric, target, result, note }) => (
-                <tr>
-                  <th scope="row">{metric}</th>
-                  <td>{target}</td>
-                  <td><strong>{result}</strong>{note && <span class="result-note">{note}</span>}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <h2>Next iteration</h2>
-          <p>
-            Belt slip limited payload, and the base housing flexed. The next build would improve tensioning, test a crossed-roller base bearing, and measure repeatability at more poses and axes.
-          </p>
-        </div>
-      </details>
+    <section class="project-timeline" id="timeline" aria-labelledby="timeline-title">
+      <div class="project-section-heading">
+        <h2 id="timeline-title">Timeline</h2>
+        <p class="project-meta">
+          <time datetime="2026-10-03">Oct 3</time>–<time datetime="2026-11-13">Nov 13, 2026</time>
+        </p>
+      </div>
+      <ol class="timeline-steps" role="list">
+        {robotArm.timeline.map(({ title, description }) => (
+          <li>
+            <h3>{title}</h3>
+            <p>{description}</p>
+          </li>
+        ))}
+      </ol>
+      <a
+        class="text-link timeline-diagram"
+        href={`${imagePath}/robot-arm-project-timeline.webp`}
+        target="_blank"
+        rel="noopener"
+      >
+        View timeline diagram<span class="sr-only"> (opens in a new tab)</span>
+      </a>
     </section>
+
+    <div class="project-body">
+      <ProjectGallery images={robotArm.gallery} imagePath={imagePath} />
+
+      <section class="project-details" id="details" aria-labelledby="details-title">
+        <div class="project-section-heading"><h2 id="details-title">Details</h2></div>
+        <div class="disclosure-list">
+          <details class="disclosure">
+            <summary>Design</summary>
+            <div class="disclosure-body" id="mechanical">
+              <p>
+                I estimated the shoulder’s peak load and acceleration torque, then checked both against stepper torque curves. Cost and lead time favored 3D-printed links with off-the-shelf hardware.
+              </p>
+              <p>
+                Two 4:1 belt stages give the shoulder a 16:1 reduction. Longer belts eased assembly, adjustable mounts set belt tension, and flanged collars held the shafts in place.
+              </p>
+            </div>
+          </details>
+
+          <details class="disclosure">
+            <summary>Controls</summary>
+            <div class="disclosure-body" id="controls">
+              <p>
+                The ESP32 receives pose commands over serial. Its C++ firmware plans trapezoidal moves and sends step and direction pulses to the drivers.
+              </p>
+              <ol class="control-flow" aria-label="Motion control signal path">
+                <li><strong>Python</strong><span>Pose commands</span></li>
+                <li><strong>ESP32</strong><span>Trajectory planning</span></li>
+                <li><strong>DM542T</strong><span>Motor drive</span></li>
+              </ol>
+              <p>I tuned two-joint motion on the bench and checked step timing while polling the controller.</p>
+            </div>
+          </details>
+
+          <details class="disclosure">
+            <summary>Results</summary>
+            <div class="disclosure-body" id="results">
+              <table class="results-table">
+                <caption class="sr-only">Design targets and observed prototype results</caption>
+                <thead>
+                  <tr><th scope="col">Metric</th><th scope="col">Target</th><th scope="col">Result</th></tr>
+                </thead>
+                <tbody>
+                  {robotArm.results.map(({ metric, target, result, note }) => (
+                    <tr>
+                      <th scope="row">{metric}</th>
+                      <td>{target}</td>
+                      <td><strong>{result}</strong>{note && <span class="result-note">{note}</span>}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <h3>Next iteration</h3>
+              <p>
+                Belt slip limited payload, and the base housing flexed. The next build would improve tensioning, test a crossed-roller base bearing, and measure repeatability at more poses and axes.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+    </div>
   </article>
 </PortfolioLayout>

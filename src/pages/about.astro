@@ -2,56 +2,106 @@
 import PortfolioLayout from '../layouts/PortfolioLayout.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-const practice = [
+const skills = [
   {
-    title: 'Mechanical design',
-    description: 'CAD, motor sizing, belt drives, and bearing layouts.',
+    title: 'Design & CAD',
+    description: 'Siemens NX, SolidWorks, Teamcenter, parametric modeling, GD&T, and tolerance analysis.',
   },
   {
-    title: 'Controls',
-    description: 'Python pose commands and ESP32 firmware for stepper motion.',
+    title: 'Simulation',
+    description: 'ANSYS structural, thermal, and fluid analysis, plus MATLAB, Simulink, and Excel VBA.',
   },
   {
-    title: 'Prototyping',
-    description: '3D-printed assemblies, bench tests, and performance measurements.',
+    title: 'Manufacturing',
+    description: 'Design for manufacturing and assembly, CNC machining, sheet metal, and additive manufacturing.',
+  },
+  {
+    title: 'Controls & prototyping',
+    description: 'Python, ESP32 motion control, 3D-printed assemblies, and bench testing.',
   },
 ];
 ---
 
 <PortfolioLayout
   title="About"
-  description="Dominic Verna-Ketel designs, builds, and tests mechanical systems."
+  description="Dominic Verna-Ketel is a mechanical engineer working on aerospace test systems and mechatronics."
   section="about"
 >
   <div class="shell">
     <section class="about-hero" aria-labelledby="about-title">
       <div class="about-copy">
         <h1 id="about-title" class="page-title">Dominic<br />Verna-Ketel</h1>
-        <p class="page-lead">I build mechanical systems that move, from early CAD to working prototypes.</p>
+        <p class="page-lead">I design aerospace hydraulic test systems and build mechatronics projects.</p>
         <a class="text-link" href={`${base}/projects/robot-arm/`}>View the robotic arm project</a>
       </div>
       <figure class="about-figure">
         <img
-          src={`${base}/images/robot-arm/robot-arm-early-joint-prototype.webp`}
-          alt="Early 3D-printed joint hardware on a worktable"
-          width="900"
-          height="1200"
+          src={`${base}/images/dominic-verna-ketel-portrait.webp`}
+          alt="Portrait of Dominic Verna-Ketel"
+          width="1080"
+          height="1620"
           fetchpriority="high"
         />
-        <figcaption>Early joint prototype</figcaption>
       </figure>
     </section>
-    <section class="practice-section" aria-labelledby="practice-title">
-      <h2 id="practice-title" class="section-title">Skills</h2>
-      <div class="disclosure-list">
-        {practice.map(({ title, description }) => (
-          <details class="disclosure">
-            <summary>{title}</summary>
-            <div class="disclosure-body"><p>{description}</p></div>
-          </details>
-        ))}
+
+    <div class="about-resume">
+      <div class="resume-history">
+        <section class="resume-section" aria-labelledby="experience-title">
+          <h2 id="experience-title" class="section-title">Experience</h2>
+          <div class="resume-entry">
+            <h3>Moog Military Aircraft</h3>
+            <p class="project-meta">Test Systems</p>
+            <ul class="resume-roles" role="list">
+              <li><span>Development Engineer, Mechanical</span><span>Jul 2025–Present</span></li>
+              <li><span>Associate Engineer, Mechanical</span><span>Aug 2023–Jun 2025</span></li>
+            </ul>
+            <details class="disclosure resume-disclosure">
+              <summary>Selected work</summary>
+              <div class="disclosure-body">
+                <ul class="resume-bullets">
+                  <li>Led two precision test systems from concept through deployment.</li>
+                  <li>Designed hydraulic circuits and manifolds and validated mechanical designs with structural and thermal FEA.</li>
+                  <li>Produced Siemens NX drawings using GD&T and tolerance analysis.</li>
+                  <li>Redesigned machined components in sheet metal, cutting part costs by about 90%.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="resume-section" aria-labelledby="education-title">
+          <h2 id="education-title" class="section-title">Education</h2>
+          <div class="resume-entry">
+            <h3>Oregon State University</h3>
+            <p class="project-meta">2018–2023</p>
+            <p>B.S. Mechanical Engineering and B.S. Manufacturing Engineering</p>
+            <p>Minor in Aerospace Engineering</p>
+            <details class="disclosure resume-disclosure">
+              <summary>Research & projects</summary>
+              <div class="disclosure-body">
+                <ul class="resume-bullets">
+                  <li>Wrote a thesis on electric fuel pump design for suborbital propulsion.</li>
+                  <li>Designed and fabricated student rocket structures and supported flight testing.</li>
+                  <li>Supported high-vacuum testing in a propulsion lab.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
       </div>
-    </section>
+
+      <section class="resume-section" aria-labelledby="skills-title">
+        <h2 id="skills-title" class="section-title">Skills</h2>
+        <div class="disclosure-list">
+          {skills.map(({ title, description }) => (
+            <details class="disclosure">
+              <summary>{title}</summary>
+              <div class="disclosure-body"><p>{description}</p></div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </div>
   </div>
 </PortfolioLayout>
