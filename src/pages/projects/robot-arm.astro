@@ -1,5 +1,4 @@
 ---
-import ProjectGallery from '../../components/ProjectGallery.astro';
 import PortfolioLayout from '../../layouts/PortfolioLayout.astro';
 import { robotArm } from '../../data/robot-arm';
 
@@ -16,8 +15,8 @@ const timelinePath = `${base}/videos/robot-arm-timeline.mp4`;
       <p class="page-lead">From CAD to a working tabletop arm in six weeks.</p>
       <nav class="case-shortcuts" aria-label="On this page">
         <a class="text-link" href="#timeline">Timeline</a>
-        <a class="text-link" href="#gallery">Gallery</a>
-        <a class="text-link" href="#details">Details</a>
+        <a class="text-link" href="#gallery">Build</a>
+        <a class="text-link" href="#results">Results</a>
       </nav>
     </header>
 
@@ -62,65 +61,69 @@ const timelinePath = `${base}/videos/robot-arm-timeline.mp4`;
       </a>
     </section>
 
-    <div class="project-body">
-      <ProjectGallery images={robotArm.gallery} imagePath={imagePath} />
+    <section class="project-build" id="gallery" aria-labelledby="build-title">
+      <div class="project-section-heading"><h2 id="build-title">Build</h2></div>
+      <ol class="build-entries" id="details" role="list">
+        {robotArm.buildImages.map(({ file, title, alt, width, height, format, description, section }) => {
+          const url = `${imagePath}/${file}`;
+          return (
+            <li class="build-entry">
+              <img
+                class:list={['build-image', { 'build-photo': format === 'photo', 'build-portrait': height > width }]}
+                src={url}
+                alt={alt}
+                width={width}
+                height={height}
+                loading="lazy"
+                decoding="async"
+              />
+              <details class="disclosure">
+                <summary>{title}</summary>
+                <div class="disclosure-body" id={section}>
+                  <p>{description}</p>
+                  {section === 'controls' && (
+                    <ol class="control-flow" aria-label="Motion control signal path">
+                      <li><strong>Python</strong><span>Pose commands</span></li>
+                      <li><strong>ESP32</strong><span>Trajectory planning</span></li>
+                      <li><strong>DM542T</strong><span>Motor drive</span></li>
+                    </ol>
+                  )}
+                  <a class="text-link" href={url} target="_blank" rel="noopener">
+                    Full image<span class="sr-only"> of {title} (opens in a new tab)</span>
+                  </a>
+                </div>
+              </details>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
 
-      <section class="project-details" id="details" aria-labelledby="details-title">
-        <div class="project-section-heading"><h2 id="details-title">Details</h2></div>
-        <div class="disclosure-list">
-          <details class="disclosure">
-            <summary>Design</summary>
-            <div class="disclosure-body" id="mechanical">
-              <p>
-                I estimated the shoulder’s peak load and acceleration torque, then checked both against stepper torque curves. Cost and lead time favored 3D-printed links with off-the-shelf hardware.
-              </p>
-              <p>
-                Two 4:1 belt stages give the shoulder a 16:1 reduction. Longer belts eased assembly, adjustable mounts set belt tension, and flanged collars held the shafts in place.
-              </p>
-            </div>
-          </details>
-
-          <details class="disclosure">
-            <summary>Controls</summary>
-            <div class="disclosure-body" id="controls">
-              <p>
-                The ESP32 receives pose commands over serial. Its C++ firmware plans trapezoidal moves and sends step and direction pulses to the drivers.
-              </p>
-              <ol class="control-flow" aria-label="Motion control signal path">
-                <li><strong>Python</strong><span>Pose commands</span></li>
-                <li><strong>ESP32</strong><span>Trajectory planning</span></li>
-                <li><strong>DM542T</strong><span>Motor drive</span></li>
-              </ol>
-              <p>I tuned two-joint motion on the bench and checked step timing while polling the controller.</p>
-            </div>
-          </details>
-
-          <details class="disclosure">
-            <summary>Results</summary>
-            <div class="disclosure-body" id="results">
-              <table class="results-table">
-                <caption class="sr-only">Design targets and observed prototype results</caption>
-                <thead>
-                  <tr><th scope="col">Metric</th><th scope="col">Target</th><th scope="col">Result</th></tr>
-                </thead>
-                <tbody>
-                  {robotArm.results.map(({ metric, target, result, note }) => (
-                    <tr>
-                      <th scope="row">{metric}</th>
-                      <td>{target}</td>
-                      <td><strong>{result}</strong>{note && <span class="result-note">{note}</span>}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <h3>Next iteration</h3>
-              <p>
-                Belt slip limited payload, and the base housing flexed. The next build would improve tensioning, test a crossed-roller base bearing, and measure repeatability at more poses and axes.
-              </p>
-            </div>
-          </details>
+    <section class="disclosure-list project-results" aria-label="Project results">
+      <details class="disclosure">
+        <summary>Test results</summary>
+        <div class="disclosure-body" id="results">
+          <table class="results-table">
+            <caption class="sr-only">Design targets and observed prototype results</caption>
+            <thead>
+              <tr><th scope="col">Metric</th><th scope="col">Target</th><th scope="col">Result</th></tr>
+            </thead>
+            <tbody>
+              {robotArm.results.map(({ metric, target, result, note }) => (
+                <tr>
+                  <th scope="row">{metric}</th>
+                  <td>{target}</td>
+                  <td><strong>{result}</strong>{note && <span class="result-note">{note}</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <h3>Next iteration</h3>
+          <p>
+            Belt slip limited payload, and the base housing flexed. The next build would improve tensioning, test a crossed-roller base bearing, and measure repeatability at more poses and axes.
+          </p>
         </div>
-      </section>
-    </div>
+      </details>
+    </section>
   </article>
 </PortfolioLayout>

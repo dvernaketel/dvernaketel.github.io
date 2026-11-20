@@ -17,20 +17,15 @@ export const robotArm = {
     { title: 'Three-joint assembly', description: 'Integrated the rotating base and tested motion using forward kinematics.' },
     { title: 'Validation', description: 'Added limit-switch homing and measured positioning repeatability.' },
   ],
-  gallery: [
-    {
-      file: 'robot-arm-workbench-prototype.webp',
-      title: 'Assembled arm',
-      alt: 'Three-axis tabletop arm beside its power supply and stepper drivers',
-      width: 1440,
-      height: 1080,
-    },
+  buildImages: [
     {
       file: 'robot-arm-early-joint-prototype.webp',
       title: 'Early joint prototype',
       alt: 'Separate 3D-printed joint parts and shaft hardware on a worktable',
       width: 900,
       height: 1200,
+      format: 'photo',
+      description: 'Testing the first printed joint showed that a press fit alone would not retain the shaft. I switched to flanged shaft collars.',
     },
     {
       file: 'robot-arm-joint-test-bench.webp',
@@ -38,13 +33,9 @@ export const robotArm = {
       alt: 'Printed joint with a stepper motor driver and wiring on the bench',
       width: 1440,
       height: 1080,
-    },
-    {
-      file: 'robot-arm-belt-drive-closeup.webp',
-      title: 'Inside the belt drive',
-      alt: 'Timing belts and pulleys visible through the printed housing',
-      width: 1440,
-      height: 1080,
+      format: 'photo',
+      section: 'controls',
+      description: 'The ESP32 receives poses from Python over serial. Its C++ firmware plans trapezoidal moves and sends step and direction pulses to the DM542T drivers. I checked step timing on the bench and tuned coordinated two-joint motion.',
     },
     {
       file: 'robot-arm-exploded-linkage.webp',
@@ -52,6 +43,18 @@ export const robotArm = {
       alt: 'Exploded view of the printed linkage, stepper motor, shafts, and bearings',
       width: 1200,
       height: 994,
+      format: 'diagram',
+      section: 'mechanical',
+      description: 'I sized the shoulder motor for peak load and acceleration, then checked the selection against stepper torque curves. Cost and lead time favored 3D-printed links with off-the-shelf shafts, bearings, and pulleys.',
+    },
+    {
+      file: 'robot-arm-belt-drive-closeup.webp',
+      title: 'Inside the belt drive',
+      alt: 'Timing belts and pulleys visible through the printed housing',
+      width: 1440,
+      height: 1080,
+      format: 'photo',
+      description: 'Longer belt paths made assembly easier. The openings in the printed housing expose the pulleys for inspection.',
     },
     {
       file: 'robot-arm-belt-reduction-diagram.webp',
@@ -59,6 +62,8 @@ export const robotArm = {
       alt: 'Annotated cross section of the NEMA 23 motor, shafts, and 20- and 80-tooth pulleys',
       width: 1700,
       height: 770,
+      format: 'diagram',
+      description: 'Two 4:1 stages, each with a 20-tooth and an 80-tooth pulley, give the shoulder a 16:1 reduction. An intermediate shaft keeps the reduction compact.',
     },
     {
       file: 'robot-arm-belt-tensioning-diagram.webp',
@@ -66,6 +71,8 @@ export const robotArm = {
       alt: 'Annotated belt path with a fixed output shaft and adjustable intermediate and motor shafts',
       width: 1787,
       height: 742,
+      format: 'diagram',
+      description: 'The output shaft stays fixed. The motor and intermediate shaft mounts slide to set belt tension.',
     },
     {
       file: 'robot-arm-base-bearing-diagram.webp',
@@ -73,6 +80,8 @@ export const robotArm = {
       alt: 'Annotated cross section showing the base output pulley, thrust bearing, housing, and 8 mm shaft',
       width: 950,
       height: 860,
+      format: 'diagram',
+      description: 'A thrust bearing carries the arm’s weight, while the ball bearings resist the overturning moment. The printed housing flexed at its cantilevered end.',
     },
   ],
   results: [
